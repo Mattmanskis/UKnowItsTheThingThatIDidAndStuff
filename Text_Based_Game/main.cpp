@@ -1,26 +1,26 @@
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
+#include <tgmath.h>
+#include "getvalues.h"
 using namespace std;
-//getNumber is used when the player needs to imput a number
-int GetNumber()
-{
-    int x;
-    cout <<"Enter a number ";
-    cin >>x;
-    return x;
-}
+
+int baseHealth;
+int baseDamage;
+int baseEnergy;
+string pName;
+double experiance = 0;
+double experianceRequired = 10;
+
 void StartText ()
 {
     cout << "Hello Welcome to Zombie Simulator 2016, by !" << endl;
     cout << "This is the difinitave version of Z. Simulator," <<endl;
     cout << "Now with more zombies, health, and damage!" <<endl;
     cout << "Before you can kick zombie ass you need to"<<endl;
-    cout << "Set the amount of health and damage you have" <<endl;
-    cout << "You can only set 150 points total, and must have" <<endl;
-    cout << "At least 25 points in each, so spend carfully!" <<endl;
+    cout << "Set the amount of health, damage, and energy you have" <<endl;
+    cout << "You can only set 15 points total, and must have" <<endl;
+    cout << "At least 3 points in each, so spend carfully!" <<endl;
 }
+
 string GetName ()
 {
     cout << "First please enter your name: ";
@@ -29,42 +29,14 @@ string GetName ()
     cout << "Ok, thanks" << pName <<endl <<endl;
     return pName;
 }
-int GetHealth ()
-{
-    int health;
-    do
-    {
-    cout <<"Now enter your health" <<endl;
-    health = GetNumber();
-    cout << "Ok, your health is " <<health <<endl <<endl;
-    } while (health <25 || health >125);
-    return health;
-}
-int GetDamage (int health)
-{
-    int damage;
-    do
-    {
-    cout << "Now enter your damage" <<endl;
-    damage = GetNumber();
-    cout << "Ok, your damage is " <<damage <<endl <<endl;
-    } while (damage <25 || damage+health >150);
-    return damage;
-}
-bool CheckOk(string pName,int health,int damage)
-{
-  cout <<"Is this ok? y/n?" <<endl;
-  cout <<"Name: " <<pName <<endl;
-  cout <<"Health: " <<health <<endl;
-  cout <<"Damage: " <<damage << endl;
-  string answer;
-  cin >> answer;
-  if (answer=="y")
-      return true;
-  else
-      return false;
-}
 
+void GetStats (int health)
+{
+    cout<<"level " <<log10 (experianceRequired)<<endl;
+    cout<<health <<"/" <<baseHealth <<" health"<<endl;
+    cout<<baseDamage <<" damage"<<endl;
+    cout<<baseEnergy <<" starting energy"<<endl <<endl;
+}
 bool FiftyFifty()
 {
    srand (time(NULL));
@@ -306,41 +278,7 @@ int Battle(int pDamage, int pHealth, string pName, int zDamage, int zHealth, str
  * health=player health
  * damage=player damage
 */
-int Encounter(int pHealth, int pDamage, string pName, string zName )
-{
-    srand (time(NULL));
-    int rand1=rand() % 8 + 4;
-    int rand2=rand() % 10 + 5;
-    int zHealth = (120*rand1+rand2)/(1+(125/pDamage));
-    int zDamage = ((25*(25/(150-pDamage)))/(rand2/2));
-    int damageDone = 0;
-    cout <<"Oh Jeez! a " <<zName <<" apeared, looks to me like it has " <<endl;
-    cout <<zHealth <<" health and " <<zDamage <<" damage!" <<endl;
-    cout <<"do you attack y/n?"<<endl;
-    string answer;
-    cin >> answer;
-    if (answer == "y")
-        damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, true);
-    if (answer != "y")
-    {
-        cout<<"Attempting sneak..."<<endl;
-        if (FiftyFifty()== true)
-            cout << "Sneak succesful! You snuck past the " <<zName <<"!!!" <<endl <<endl;
-        else
-        {
-            cout << "Sneak failed! The " <<zName <<" saw you!!!" <<endl;
-            damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, false);
-        }
-    }
 
-    return pHealth-damageDone;
-}
-float GetScore(int startHealth,int endHealth)
-{
-    float score = (endHealth*1000)/startHealth;
-    cout <<"Your score was " <<score <<" out of 1000 possible points!" <<endl ;
-    return score;
-}
 
 /*main includes most of the game text, health and damage veriables, as well as all
 of the operations on them*/
@@ -348,42 +286,45 @@ int main()
 {
     bool readyToPlay = false;
     StartText();
-    string pName=GetName();
-    int health=GetHealth();
-    int startHealth=health;
-    int damage=GetDamage(health);
-    readyToPlay=CheckOk(pName,health,damage);
-    if (readyToPlay==false)
+    do
+    {
+    pName=GetName();
+    baseHealth=GetHealth();
+    baseDamage=GetDamage(baseHealth);
+    baseEnergy=GetEnergy(baseHealth,baseDamage);
+    GetStats(baseHealth);
+    readyToPlay=CheckOk("Is it ok to start with these stats?");
+    }while (readyToPlay==false);
+    int health = baseHealth;
+    health = Encounter(health, baseDamage, pName, "Agressive Zombie");
+    cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
+    if (health <= 0)
+    {
+        cout<<"You are dead, RIP" <<endl;
         return 0;
-    health = Encounter(health, damage, pName, "Agressive Zombie");
-    cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
-    if (health <= 0)
-    {
-        cout<<"You are dead, RIP" <<endl;
-        return GetScore(startHealth,health);
     }
-    health = Encounter(health, damage, pName, "Mirror Zombie");
+    health = Encounter(health, baseDamage, pName, "Mirror Zombie");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {
         cout<<"You are dead, RIP" <<endl;
-        return GetScore(startHealth,health);
+        return 0;
     }
-    health = Encounter(health, damage, pName, "Defensive Zombie");
+    health = Encounter(health, baseDamage, pName, "Defensive Zombie");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {
         cout<<"You are dead, RIP" <<endl;
-        return GetScore(startHealth,health);
+        return 0;
     }
-    health = Encounter(health, damage, pName, "BOSS ZOMBIE");
+    health = Encounter(health, baseDamage, pName, "BOSS ZOMBIE");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {
         cout<<"You are dead, RIP" <<endl;
-        return GetScore(startHealth,health);
+        return 0;
     }
 
 
-    return GetScore(startHealth,health);
+    return 0;
 }
