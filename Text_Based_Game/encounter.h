@@ -1,11 +1,5 @@
 #ifndef ENCOUNTER_H
 #define ENCOUNTER_H
-
-
-class Encounter
-{
-public:
-    Encounter();
-};
-
+#include <string>
+int Encounter(int level, std::string zName );
 #endif // ENCOUNTER_H

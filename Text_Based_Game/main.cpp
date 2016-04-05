@@ -1,6 +1,7 @@
 #include <iostream>
 #include <tgmath.h>
 #include "getvalues.h"
+#include "encounter.h"
 using namespace std;
 
 int baseHealth;
@@ -21,30 +22,12 @@ void StartText ()
     cout << "At least 3 points in each, so spend carfully!" <<endl;
 }
 
-string GetName ()
-{
-    cout << "First please enter your name: ";
-    string pName;
-    cin >>pName;
-    cout << "Ok, thanks" << pName <<endl <<endl;
-    return pName;
-}
-
 void GetStats (int health)
 {
     cout<<"level " <<log10 (experianceRequired)<<endl;
     cout<<health <<"/" <<baseHealth <<" health"<<endl;
     cout<<baseDamage <<" damage"<<endl;
     cout<<baseEnergy <<" starting energy"<<endl <<endl;
-}
-bool FiftyFifty()
-{
-   srand (time(NULL));
-   int x = rand() % 2 + 0;
-   if (x==1)
-       return true;
-   else
-       return false;
 }
 
 int CompareAttacks(int pAttack, int zAttack)
@@ -296,28 +279,28 @@ int main()
     readyToPlay=CheckOk("Is it ok to start with these stats?");
     }while (readyToPlay==false);
     int health = baseHealth;
-    health = Encounter(health, baseDamage, pName, "Agressive Zombie");
+    health = Encounter(1, "Agressive Zombie");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {
         cout<<"You are dead, RIP" <<endl;
         return 0;
     }
-    health = Encounter(health, baseDamage, pName, "Mirror Zombie");
+    health = Encounter(1, "Mirror Zombie");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {
         cout<<"You are dead, RIP" <<endl;
         return 0;
     }
-    health = Encounter(health, baseDamage, pName, "Defensive Zombie");
+    health = Encounter(1, "Defensive Zombie");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {
         cout<<"You are dead, RIP" <<endl;
         return 0;
     }
-    health = Encounter(health, baseDamage, pName, "BOSS ZOMBIE");
+    health = Encounter(1, "BOSS ZOMBIE");
     cout <<endl <<endl <<"your health is now " <<health <<"..." <<endl;
     if (health <= 0)
     {

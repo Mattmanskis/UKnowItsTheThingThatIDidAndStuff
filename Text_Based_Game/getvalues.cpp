@@ -1,6 +1,15 @@
 #include "getvalues.h"
 #include <iostream>
+#include <time.h>
 using namespace std;
+    string GetName ()
+    {
+        cout << "First please enter your name: ";
+        string pName;
+        cin >>pName;
+        cout << "Ok, thanks " << pName <<endl <<endl;
+        return pName;
+    }
     int GetNumber()
     {
         int x;
@@ -54,6 +63,16 @@ using namespace std;
       else
           return false;
     }
+    bool FiftyFifty()
+    {
+       srand (time(NULL));
+       int x = rand() % 2 + 0;
+       if (x==1)
+           return true;
+       else
+           return false;
+    }
+
 
 
 

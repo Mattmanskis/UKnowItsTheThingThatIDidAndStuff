@@ -4,18 +4,18 @@
 #include <stdio.h>
 #include <time.h>
 #include "getvalues.h"
-
-int Encounter(int pHealth, int pDamage, string pName, string zName )
-{
+using namespace std;
+int Encounter(int level, string zName )
+{    
     srand (time(NULL));
     int rand1=rand() % 3 + 1;
     int damageDone = 0;
-    cout <<"Oh Jeez! a " <<zName <<" apeared!" <<endl;
-    CheckOk()
+    cout <<"Oh Jeez! a level " <<level <<" " <<zName <<" apeared!" <<endl;
+    CheckOk("Do you attack?");
     string answer;
     cin >> answer;
     if (answer == "y")
-        damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, true);
+        //damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, true);
     if (answer != "y")
     {
         cout<<"Attempting sneak..."<<endl;
@@ -24,10 +24,10 @@ int Encounter(int pHealth, int pDamage, string pName, string zName )
         else
         {
             cout << "Sneak failed! The " <<zName <<" saw you!!!" <<endl;
-            damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, false);
+            //damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, false);
         }
     }
 
-    return pHealth-damageDone;
+    return 0;
 }
 
