@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     getvalues.cpp \
-    encounter.cpp
+    encounter.cpp \
+    battle.cpp
 
 HEADERS += \
     getvalues.h \
-    encounter.h
+    encounter.h \
+    battle.h

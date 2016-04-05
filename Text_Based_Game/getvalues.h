@@ -2,11 +2,18 @@
 #define GETVALUES_H
 #include <string>
 using namespace std;
-string GetName ();
+void InitalizeName();
+void InitalizeHealth();
+void InitalizeDamage();
+void InitalizeEnergy();
+void InitalizeName();
+int GetHealth();
+int GetBaseHealth();
+int GetDamage();
+int GetEnergy();
+int GetLevel();
+void GetStats ();
 int GetNumber();
-int GetHealth ();
-int GetDamage (int health);
-int GetEnergy (int health, int damage);
 bool CheckOk(string text);
 bool FiftyFifty();
 #endif // GETVALUES_H
