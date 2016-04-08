@@ -9,25 +9,39 @@ using namespace std;
 int Encounter(int level, string zName )
 {    
     srand (time(NULL));
-    int rand1=rand() % 3 + 1;
+    int rand1=rand() % 4 + 1;
     int damageDone = 0;
-    cout <<"Oh Jeez! a level " <<level <<" " <<zName <<" apeared!" <<endl;
-    if (CheckOk("Do you attack?")==true)
+    if (rand1 < 3)
     {
-        Battle(level,zName, true);
-        return damageDone;
+        cout<< "You see an agressive " <<zName <<", coming at you, you must battle!" <<endl;
+        Battle(level, zName, 0);
     }
-    else if (FiftyFifty()== true)
+    else if (rand1 == 1)
     {
-        cout<<"Attempting sneak..."<<endl <<endl;
-        cout << "Sneak succesful! You snuck past the " <<zName <<"!!!" <<endl <<endl;
+        cout<< "You spot a " <<zName <<", it hasn't seen you yet" <<endl;
+        if (CheckOk("Do you attack?")==true)
+        {
+            Battle(level,zName, 1);
+            return damageDone;
+        }
+        else if (FiftyFifty()== true)
+        {
+            cout<<"Attempting sneak..."<<endl <<endl;
+            cout << "Sneak succesful! You snuck past the " <<zName <<"!" <<endl <<endl;
+        }
+        else
+        {
+            cout<<"Attempting sneak..."<<endl <<endl;
+            cout << "Sneak failed! The " <<zName <<" attacked you!" <<endl;
+            Battle(level, zName, 2);
+        }
     }
     else
     {
-        cout<<"Attempting sneak..."<<endl <<endl;
-        cout << "Sneak failed! The " <<zName <<" saw you!!!" <<endl;
-        Battle(level, zName, false);
+        cout<< "A " <<zName <<" attacks you before you can react!" <<endl;
+        Battle(level, zName, 2);
     }
+
 
     return damageDone;
 }

@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += main.cpp \
     getvalues.cpp \
     encounter.cpp \
-    battle.cpp
+    battle.cpp \
+    ai.cpp
 
 HEADERS += \
     getvalues.h \
     encounter.h \
-    battle.h
+    battle.h \
+    ai.h

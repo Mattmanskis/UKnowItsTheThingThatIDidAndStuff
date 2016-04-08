@@ -114,6 +114,28 @@ int skillsArray[10]={0,0,0,0,0,0,0,0,0,0};
         health = health - damage;
     }
 
+    int GetPAttack()
+    {
+        bool answer = CheckOk("Use a special action?");
+        if (answer == false)
+        {
+            cout<<"Ok, standard action" <<endl;
+            string answer;
+            cout <<endl <<text << endl <<"Block or attack?" <<endl;
+            cin >> answer;
+            cout <<endl;
+            if (answer=="attack")
+                return 0;
+            else
+                return 1;
+        }
+        else
+        {
+            cout<<"Ok, special action" <<endl;
+
+        }
+
+    }
 
     bool CheckOk(string text)
     {
