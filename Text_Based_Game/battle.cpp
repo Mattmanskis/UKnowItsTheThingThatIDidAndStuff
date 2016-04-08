@@ -6,6 +6,13 @@
 #include <time.h>
 #include "getvalues.h"
 using namespace std;
+
+int zLevel;
+string zName;
+int zDamage;
+int zHealth;
+int zEnergy;
+
 int CompareAttacks(int pAttack, int zAttack)
 {
     if (pAttack==0)
@@ -22,19 +29,30 @@ int CompareAttacks(int pAttack, int zAttack)
 
 
 }
-int Battle(int pDamage, int pHealth, string pName, int zDamage, int zHealth, string zName, bool pStartAttack)
+void CreateZ(int level, string name)
+{
+    zLevel=level;
+    zName=name;
+    if(zName=="Agressive Zombie")
+    {
+        zDamage=5*zLevel/2;
+        zHealth=10*zLevel;
+        zEnergy=4;
+    }
+}
+void Battle(int level, string name, bool pStartAttack)
 {
     bool zAlive=true;
     bool pAlive=true;
     bool pStun=false;
     bool zStun=false;
-    int pStartHealth=pHealth;
+    int pStartHealth=GetHealth();;
     if (pStartAttack==true) {
-        zHealth= zHealth-pDamage*2;
-        cout <<pName <<" deals " <<pDamage*2 <<" Sneak damage!" <<endl <<endl;
+        zHealth= zHealth-GetDamage()*2;
+        cout <<GetName() <<" deals " <<GetDamage()*2 <<" Sneak damage!" <<endl <<endl;
     }
     else {
-        pHealth= pHealth-zDamage*2;
+        SetHealth(zDamage*2);
         cout <<zName <<" deals " <<zDamage*2 <<" Sneak damage!" <<endl <<endl;
     }
 
@@ -138,95 +156,6 @@ int Battle(int pDamage, int pHealth, string pName, int zDamage, int zHealth, str
             }
             pStun=false;
             zStun=false;
-            int roundType = CompareAttacks(pAttack, zAttack);
-            if (roundType==0)
-            {
-                pHealth=pHealth-zDamage;
-            }
-            if (roundType==1)
-            {
-                pHealth=pHealth-zDamage;
-                zHealth=zHealth-pDamage;
-            }
-            if (roundType==3)
-            {
-                pHealth=pHealth-zDamage/10;
-                zHealth=zHealth-pDamage/10;
-            }
-            if (roundType==4)
-            {
-                zHealth=zHealth-pDamage/10;
-                pStun=true;
-            }
-            if (roundType==5)
-            {
-                pHealth=pHealth-zDamage/10;
-                zHealth=zHealth-pDamage;
-            }
-            if (roundType==6)
-            {
-                pHealth=pHealth-zDamage/10;
-                pStun=true;
-            }
-            if (roundType==7)
-            {
-                pHealth=pHealth-zDamage/10;
-                zStun=true;
-            }
-            if (roundType==8)
-            {
-                pHealth=pHealth-zDamage;
-                zHealth=zHealth-pDamage/10;
-            }
-            if (roundType==9)
-            {
-                zHealth=zHealth-pDamage/10;
-                zStun=true;
-            }
-            if (roundType==10)
-            {
-                zHealth=zHealth-pDamage;
-            }
-            if (zAttack==0)
-                cout <<zName <<" is stunned and does nothing..."<<endl;
-            if (zAttack==1)
-                cout <<zName <<" attacks!"<<endl;
-            if (zAttack==2)
-                cout <<zName <<" blocks!"<<endl;
-            if (zAttack==3)
-                cout <<zName <<" gaurd-breaks!"<<endl;
-            if (pAttack==0)
-                cout <<pName <<" is stunned and does nothing..."<<endl;
-            if (pAttack==1)
-                cout <<pName <<" attacks!"<<endl;
-            if (pAttack==2)
-                cout <<pName <<" blocks!"<<endl;
-            if (pAttack==3)
-                cout <<pName <<" gaurd-breaks!"<<endl;
-            if (zStun==true)
-                cout <<zName <<" is stuned!"<<endl;
-            if (pStun==true)
-                cout <<pName <<" is stuned!"<<endl;
-            if (zHealth<=0)
-            {
-                zAlive=false;
-                zHealth=0;
-            }
-            if (pHealth<=0)
-            {
-                pAlive=false;
-                pHealth=0;
-            }
-            cout<<pName <<" has "<<pHealth <<" health" <<endl;
-            cout<<zName <<" has " <<zHealth <<" health" <<endl;
-            if (zHealth<=0)
-                zAlive=false;
-            if (pHealth<=0)
-                pAlive=false;
-            cout<<endl;
-
-        }while(zAlive==pAlive);
+}while (pAlive==zAlive);
     cout<<"Battle over!";
-    return pStartHealth-pHealth;
-
 }

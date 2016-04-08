@@ -1,11 +1,6 @@
 #ifndef BATTLE_H
 #define BATTLE_H
-
-
-class battle
-{
-public:
-    battle();
-};
+#include <string>
+void Battle(int level, std::string name , bool pStartAttack);
 
 #endif // BATTLE_H

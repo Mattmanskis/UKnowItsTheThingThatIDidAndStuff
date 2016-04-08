@@ -8,10 +8,12 @@ int health;
 int baseHealth;
 int baseDamage;
 int baseEnergy;
+int baseDefense;
 string pName;
 double experiance = 0;
 double experianceRequired = 10;
-
+int skillsArray[10]={0,0,0,0,0,0,0,0,0,0};
+//{1 ,2 heal,3 bash,4 iron skin,5 rage,6 blinding light,7 great heal, 8 curse drain, 9 intimidate, 10 comforting light}
     int GetNumber()
     {
         int x;
@@ -31,9 +33,9 @@ double experianceRequired = 10;
     {
         do
         {
-        cout <<"Enter your health, must be between 3-9" <<endl;
+        cout <<"Enter your health, must be between 3-11" <<endl;
         baseHealth = GetNumber();
-        } while (baseHealth <3 || baseHealth >9);
+        } while (baseHealth <3 || baseHealth >11);
         cout << "Ok, your health is " <<baseHealth <<endl <<endl;
         health=baseHealth;
     }
@@ -42,9 +44,9 @@ double experianceRequired = 10;
     {
         do
         {
-        cout << "Now enter your damage must be between 3 and " <<12-baseHealth <<endl;
+        cout << "Now enter your damage must be between 3 and " <<14-baseHealth <<endl;
         baseDamage = GetNumber();
-        } while (baseDamage <3 || baseDamage+baseHealth >12);
+        } while (baseDamage <3 || baseDamage+baseHealth >14);
         cout << "Ok, your damage is " <<baseDamage <<endl <<endl;
     }
 
@@ -52,9 +54,18 @@ double experianceRequired = 10;
     {
         do
         {
-            cout << "Now enter your energy, must be " <<15-baseHealth-baseDamage <<endl;
+            cout << "Now enter your energy, must be between 3 and " <<17-baseHealth-baseDamage <<endl;
             baseEnergy = GetNumber();
-        } while (baseDamage <3 || baseDamage+baseHealth >12);
+        } while (baseDamage <3 || baseDamage+baseHealth+baseEnergy >17);
+        cout << "Ok, your energy is " <<baseEnergy <<endl <<endl;
+    }
+    void InitalizeDefense ()
+    {
+        do
+        {
+            cout << "Now enter your defense, must be " <<20-baseHealth-baseDamage-baseEnergy <<endl;
+            baseDefense = GetNumber();
+        } while (baseDefense <3 || baseDamage+baseHealth+baseEnergy+baseDefense >20);
         cout << "Ok, your energy is " <<baseEnergy <<endl <<endl;
     }
     int GetHealth()
@@ -76,7 +87,10 @@ double experianceRequired = 10;
     {
         return baseEnergy;
     }
-
+    int GetDefense()
+    {
+        return baseDefense;
+    }
     string GetName()
     {
         return pName;
@@ -91,8 +105,15 @@ double experianceRequired = 10;
         cout<<"level " <<GetLevel() <<endl;
         cout<<health <<"/" <<baseHealth <<" health"<<endl;
         cout<<baseDamage <<" damage"<<endl;
-        cout<<baseEnergy <<" starting energy"<<endl <<endl;
+        cout<<baseEnergy <<" starting energy"<<endl;
+        cout<<baseDefense << " defense" <<endl <<endl;
     }
+
+    void SetHealth(int damage)
+    {
+        health = health - damage;
+    }
+
 
     bool CheckOk(string text)
     {

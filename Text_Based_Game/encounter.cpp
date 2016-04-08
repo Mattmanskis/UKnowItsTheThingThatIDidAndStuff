@@ -13,8 +13,10 @@ int Encounter(int level, string zName )
     int damageDone = 0;
     cout <<"Oh Jeez! a level " <<level <<" " <<zName <<" apeared!" <<endl;
     if (CheckOk("Do you attack?")==true)
-        //damageDone = Battle(level, string zName);
+    {
+        Battle(level,zName, true);
         return damageDone;
+    }
     else if (FiftyFifty()== true)
     {
         cout<<"Attempting sneak..."<<endl <<endl;
@@ -24,7 +26,7 @@ int Encounter(int level, string zName )
     {
         cout<<"Attempting sneak..."<<endl <<endl;
         cout << "Sneak failed! The " <<zName <<" saw you!!!" <<endl;
-        //damageDone = Battle(pDamage, pHealth, pName, zDamage, zHealth, zName, false);
+        Battle(level, zName, false);
     }
 
     return damageDone;
