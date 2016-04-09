@@ -12,6 +12,7 @@ int GetBaseHealth();
 int GetDamage();
 int GetEnergy();
 int GetLevel();
+int GetEnergyReq(int x);
 string GetName();
 void GetStats ();
 void SetHealth(int damage);

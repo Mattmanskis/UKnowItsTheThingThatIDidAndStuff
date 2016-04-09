@@ -12,7 +12,8 @@ int baseDefense;
 string pName;
 double experiance = 0;
 double experianceRequired = 10;
-int skillsArray[9]={1,0,0,0,0,0,0,0,0};
+int skillsArray[9]={1,1,1,1,1,1,1,1,1};
+int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
     int GetNumber()
     {
         int x;
@@ -55,7 +56,7 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
         {
             cout << "Now enter your energy, must be between 3 and " <<17-baseHealth-baseDamage <<endl;
             baseEnergy = GetNumber();
-        } while (baseDamage <3 || baseDamage+baseHealth+baseEnergy >17);
+        } while (baseEnergy <3 || baseDamage+baseHealth+baseEnergy >17);
         cout << "Ok, your energy is " <<baseEnergy <<endl <<endl;
     }
     void InitalizeDefense ()
@@ -102,6 +103,10 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
     {
         return skillsArray[x];
     }
+    int GetEnergyReq(int x)
+    {
+        return energyReq[x];
+    }
 
     void GetStats ()
     {
@@ -132,8 +137,8 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
 
     int SpecialActions(int energy)
     {
-        int energyReq;
-        cout<<"Ok, special action" <<endl <<endl <<"Chose an action:" <<endl <<endl;
+        cout<<endl<<"Energy is " <<energy <<"/" <<GetEnergy();
+        cout<<endl <<endl <<"Chose an action:" <<endl <<endl;
         for(int i=0; i<10; i++)
         {
             int count=i;
@@ -142,55 +147,62 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
             {
                 if (x==1)
                     cout<<"1) Heal -2" <<endl;
-                energyReq=2;
             }
             else if (count==1)
             {
                 if (x==1)
+                {
                     cout<<"2) Gaurd Break -1"<<endl;
-                energyReq=1;
+                }
             }
             else if (count==2)
             {
                 if (x==1)
+                {
                     cout<<"3) Iron skin -3"<<endl;
-                energyReq=3;
+                }
             }
             else if (count==3)
             {
                 if (x==1)
+                {
                     cout<<"4) Prayer to the old gods -4"<<endl;
-                energyReq=4;
+                }
             }
             else if (count==4)
             {
                 if (x==1)
+                {
                     cout<<"5) Ethral scream  -4"<<endl;
-                energyReq=4;
+                }
             }
             else if (count==5)
             {
                 if (x==1)
+                {
                     cout<<"6) Blood curse -2"<<endl;
-                energyReq=2;
+                }
             }
             else if (count==6)
             {
                 if (x==1)
+                {
                     cout<<"7) Darkness falls -5"<<endl;
-                energyReq=5;
+                }
             }
             else if (count==7)
             {
                 if (x==1)
+                {
                     cout<<"8) Damage bank - 2"<<endl;
-                energyReq=2;
+                }
             }
             else if (count==8)
             {
                 if (x==1)
+                {
                     cout<<"9) Great heal -9"<<endl;
-                energyReq=9;
+                }
             }
             else if (count==9)
             {
@@ -202,9 +214,9 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
             StandardActions();
         else if (skillsArray[number-1]==1)
         {
-            if (energyReq > energy)
+            if (energyReq[number-1] > energy)
             {
-                cout<<"Too little energy! Please enter a valid number" <<endl;
+                cout<<"Too little energy! Please enter a valid number ";
                 SpecialActions(energy);
             }
             else
@@ -212,7 +224,7 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
         }
         else
         {
-            cout <<"Please enter a valid number" <<endl;
+            cout <<number <<" is not a valid number. Please enter a valid number";
             SpecialActions(energy);
         }
 
@@ -220,15 +232,7 @@ int skillsArray[9]={1,0,0,0,0,0,0,0,0};
 
     int GetPAttack(int energy)
     {
-        bool answer = CheckOk("Use a special action?");
-        if (answer == false)
-        {
-            return StandardActions();
-        }
-        else
-        {
-            return SpecialActions(energy);
-        }
+        return SpecialActions(energy);
     }
 
 

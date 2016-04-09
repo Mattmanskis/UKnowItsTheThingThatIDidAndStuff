@@ -13,6 +13,7 @@ string zName;
 int zDamage;
 int zHealth;
 int zEnergy;
+int zDefense;
 
 int CompareAttacks(int pAttack, int zAttack)
 {
@@ -40,13 +41,13 @@ void CreateZ(int level, string name)
         zDamage=5*zLevel/2;
         zHealth=10*zLevel;
         zEnergy=4;
+        zDefense=2;
     }
 }
 void Battle(int level, string name, int attacker)
 {
     void CreateZ(int level, string name);
     bool pAlive=true;
-    int pStartHealth=GetHealth();
     if (attacker < 0) {
         if (attacker == 1)
         {
@@ -67,6 +68,8 @@ void Battle(int level, string name, int attacker)
         int pAttack;
         int roundCount;
         int energy;
+        int pDamageDone;
+        int zDamageDone;
         if (roundCount>50 || roundCount<0)
         {
             roundCount=0;
@@ -82,7 +85,27 @@ void Battle(int level, string name, int attacker)
         cout <<"Round " <<roundCount <<endl <<endl;
         cout <<"Energy is "<<energy <<"/" <<GetEnergy();
         pAttack=GetPAttack(energy);
-
+        cout<<pAttack;
+        energy=energy-GetEnergyReq(pAttack-2);
+        if (pAttack<7)
+        {
+            if (pAttack<4)
+            {
+                if (pAttack == 1)
+                {
+                    zHealth=zHealth-(pAttack-zDefense);
+                    cout<<GetName() <<" uses standard attack!";
+                    zDamageDone = (pAttack-zDefense);
+                }
+                if (pAttack == 3)
+                {
+                    if(GetHealth() + 5 > GetBaseHealth())
+                        SetHealth(-(GetBaseHealth()-GetHealth()));
+                    else
+                        SetHealth(-5);
+                }
+            }
+        }
         cout<<endl;
     }while (pAlive==zAlive);
     cout<<"Battle over!";
