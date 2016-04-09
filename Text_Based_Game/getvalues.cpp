@@ -220,7 +220,7 @@ int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
                 SpecialActions(energy);
             }
             else
-            return number + 2;
+            return number + 1;
         }
         else
         {

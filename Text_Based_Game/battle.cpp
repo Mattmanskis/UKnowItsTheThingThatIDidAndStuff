@@ -91,13 +91,13 @@ void Battle(int level, string name, int attacker)
         {
             if (pAttack<4)
             {
-                if (pAttack == 1)
+                if (pAttack == 0)
                 {
                     zHealth=zHealth-(pAttack-zDefense);
                     cout<<GetName() <<" uses standard attack!";
                     zDamageDone = (pAttack-zDefense);
                 }
-                if (pAttack == 3)
+                if (pAttack == 2)
                 {
                     if(GetHealth() + 5 > GetBaseHealth())
                         SetHealth(-(GetBaseHealth()-GetHealth()));
