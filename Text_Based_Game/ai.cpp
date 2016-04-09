@@ -1,6 +1,6 @@
 #include "ai.h"
-
-if (zName == "Agressive Zombie")
+void Ai(){
+/*if (zName == "Agressive Zombie")
 {
     if (zAttack==0){
         if(FiftyFifty())
@@ -75,4 +75,5 @@ if (zName == "BOSS ZOMBIE")
             zAttack=2;
     }
 
+}*/
 }

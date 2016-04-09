@@ -15,6 +15,7 @@ int GetLevel();
 string GetName();
 void GetStats ();
 void SetHealth(int damage);
+int GetPAttack(int energy);
 int GetNumber();
 bool CheckOk(string text);
 bool FiftyFifty();

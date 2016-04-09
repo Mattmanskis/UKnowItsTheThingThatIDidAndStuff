@@ -12,8 +12,7 @@ int baseDefense;
 string pName;
 double experiance = 0;
 double experianceRequired = 10;
-int skillsArray[10]={0,0,0,0,0,0,0,0,0,0};
-//{1 ,2 heal,3 bash,4 iron skin,5 rage,6 blinding light,7 great heal, 8 curse drain, 9 intimidate, 10 comforting light}
+int skillsArray[9]={1,0,0,0,0,0,0,0,0};
     int GetNumber()
     {
         int x;
@@ -99,6 +98,10 @@ int skillsArray[10]={0,0,0,0,0,0,0,0,0,0};
     {
         return log10 (experianceRequired);
     }
+    int GetSkillsArray(int x)
+    {
+        return skillsArray[x];
+    }
 
     void GetStats ()
     {
@@ -114,28 +117,121 @@ int skillsArray[10]={0,0,0,0,0,0,0,0,0,0};
         health = health - damage;
     }
 
-    int GetPAttack()
+    int StandardActions()
+    {
+        cout<<"Ok, standard action" <<endl;
+        string answer;
+        cout << endl <<"Block or attack?" <<endl;
+        cin >> answer;
+        cout <<endl;
+        if (answer=="attack")
+            return 0;
+        else
+            return 1;
+    }
+
+    int SpecialActions(int energy)
+    {
+        int energyReq;
+        cout<<"Ok, special action" <<endl <<endl <<"Chose an action:" <<endl <<endl;
+        for(int i=0; i<10; i++)
+        {
+            int count=i;
+            int x = GetSkillsArray(i);
+            if (count==0)
+            {
+                if (x==1)
+                    cout<<"1) Heal -2" <<endl;
+                energyReq=2;
+            }
+            else if (count==1)
+            {
+                if (x==1)
+                    cout<<"2) Gaurd Break -1"<<endl;
+                energyReq=1;
+            }
+            else if (count==2)
+            {
+                if (x==1)
+                    cout<<"3) Iron skin -3"<<endl;
+                energyReq=3;
+            }
+            else if (count==3)
+            {
+                if (x==1)
+                    cout<<"4) Prayer to the old gods -4"<<endl;
+                energyReq=4;
+            }
+            else if (count==4)
+            {
+                if (x==1)
+                    cout<<"5) Ethral scream  -4"<<endl;
+                energyReq=4;
+            }
+            else if (count==5)
+            {
+                if (x==1)
+                    cout<<"6) Blood curse -2"<<endl;
+                energyReq=2;
+            }
+            else if (count==6)
+            {
+                if (x==1)
+                    cout<<"7) Darkness falls -5"<<endl;
+                energyReq=5;
+            }
+            else if (count==7)
+            {
+                if (x==1)
+                    cout<<"8) Damage bank - 2"<<endl;
+                energyReq=2;
+            }
+            else if (count==8)
+            {
+                if (x==1)
+                    cout<<"9) Great heal -9"<<endl;
+                energyReq=9;
+            }
+            else if (count==9)
+            {
+                    cout<<"10) standard actions -0"<<endl<<endl;
+            }
+        }
+        int number = GetNumber();
+        if (number==10)
+            StandardActions();
+        else if (skillsArray[number-1]==1)
+        {
+            if (energyReq > energy)
+            {
+                cout<<"Too little energy! Please enter a valid number" <<endl;
+                SpecialActions(energy);
+            }
+            else
+            return number + 2;
+        }
+        else
+        {
+            cout <<"Please enter a valid number" <<endl;
+            SpecialActions(energy);
+        }
+
+    }
+
+    int GetPAttack(int energy)
     {
         bool answer = CheckOk("Use a special action?");
         if (answer == false)
         {
-            cout<<"Ok, standard action" <<endl;
-            string answer;
-            cout <<endl <<text << endl <<"Block or attack?" <<endl;
-            cin >> answer;
-            cout <<endl;
-            if (answer=="attack")
-                return 0;
-            else
-                return 1;
+            return StandardActions();
         }
         else
         {
-            cout<<"Ok, special action" <<endl;
-
+            return SpecialActions(energy);
         }
-
     }
+
+
 
     bool CheckOk(string text)
     {

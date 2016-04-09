@@ -7,7 +7,7 @@
 #include "getvalues.h"
 using namespace std;
 
-bool zAlive;
+bool zAlive = true;
 int zLevel;
 string zName;
 int zDamage;
@@ -46,8 +46,6 @@ void Battle(int level, string name, int attacker)
 {
     void CreateZ(int level, string name);
     bool pAlive=true;
-    bool pStun=false;
-    bool zStun=false;
     int pStartHealth=GetHealth();
     if (attacker < 0) {
         if (attacker == 1)
@@ -62,30 +60,30 @@ void Battle(int level, string name, int attacker)
     }
 
     cout <<"Battle started!" <<endl;
-        do
-        {
+    do
+    {
         cout<<endl;
         int zAttack;
         int pAttack;
-        GetPAttack();
-            int roundCount;
-            if (roundCount>50 || roundCount<0)
-                roundCount=0;
-            roundCount=roundCount+1;
-            cout <<"Round " <<roundCount <<endl;
-            cout <<"which attack do you chose? (1=attack, 2=block, 3=gaurd-break)"<<endl;
-            pAttack=GetNumber();
-            cout<<endl;
-            if (pStun==true)
-            {
-                pAttack=0;
-            }
-            if (zStun==true)
-            {
-                zAttack=0;
-            }
-            pStun=false;
-            zStun=false;
-}while (pAlive==zAlive);
+        int roundCount;
+        int energy;
+        if (roundCount>50 || roundCount<0)
+        {
+            roundCount=0;
+            energy=0;
+        }
+        if (energy==0)
+            energy=1;
+        else if (energy*2 >= GetEnergy())
+            energy=GetEnergy();
+        else
+            energy=energy*2;
+        roundCount=roundCount+1;
+        cout <<"Round " <<roundCount <<endl <<endl;
+        cout <<"Energy is "<<energy <<"/" <<GetEnergy();
+        pAttack=GetPAttack(energy);
+
+        cout<<endl;
+    }while (pAlive==zAlive);
     cout<<"Battle over!";
 }
