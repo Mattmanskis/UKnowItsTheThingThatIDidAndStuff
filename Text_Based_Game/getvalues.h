@@ -9,6 +9,7 @@ void InitalizeEnergy();
 void InitalizeDefense();
 int GetHealth();
 int GetBaseHealth();
+int GetDefense();
 int GetDamage();
 int GetEnergy();
 int GetLevel();

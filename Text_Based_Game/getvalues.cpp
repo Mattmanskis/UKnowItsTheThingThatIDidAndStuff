@@ -13,7 +13,7 @@ string pName;
 double experiance = 0;
 double experianceRequired = 10;
 int skillsArray[9]={1,1,1,1,1,1,1,1,1};
-int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
+int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
     int GetNumber()
     {
         int x;
@@ -31,11 +31,13 @@ int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
 
     void InitalizeHealth ()
     {
+        int x;
         do
         {
         cout <<"Enter your health, must be between 3-11" <<endl;
-        baseHealth = GetNumber();
-        } while (baseHealth <3 || baseHealth >11);
+        x= GetNumber();
+        baseHealth=10*x;
+        } while (x <3 || x >11);
         cout << "Ok, your health is " <<baseHealth <<endl <<endl;
         health=baseHealth;
     }
@@ -44,9 +46,9 @@ int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
     {
         do
         {
-        cout << "Now enter your damage must be between 3 and " <<14-baseHealth <<endl;
+        cout << "Now enter your damage must be between 3 and " <<14-baseHealth/10 <<endl;
         baseDamage = GetNumber();
-        } while (baseDamage <3 || baseDamage+baseHealth >14);
+        } while (baseDamage <3 || baseDamage+baseHealth/10 >14);
         cout << "Ok, your damage is " <<baseDamage <<endl <<endl;
     }
 
@@ -54,18 +56,18 @@ int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
     {
         do
         {
-            cout << "Now enter your energy, must be between 3 and " <<17-baseHealth-baseDamage <<endl;
+            cout << "Now enter your energy, must be between 3 and " <<17-baseHealth/10-baseDamage <<endl;
             baseEnergy = GetNumber();
-        } while (baseEnergy <3 || baseDamage+baseHealth+baseEnergy >17);
+        } while (baseEnergy <3 || baseDamage+baseHealth/10+baseEnergy >17);
         cout << "Ok, your energy is " <<baseEnergy <<endl <<endl;
     }
     void InitalizeDefense ()
     {
         do
         {
-            cout << "Now enter your defense, must be " <<20-baseHealth-baseDamage-baseEnergy <<endl;
+            cout << "Now enter your defense, must be " <<20-baseHealth/10-baseDamage-baseEnergy <<endl;
             baseDefense = GetNumber();
-        } while (baseDefense <3 || baseDamage+baseHealth+baseEnergy+baseDefense >20);
+        } while (baseDefense <3 || baseDamage+baseHealth/10+baseEnergy+baseDefense >20);
         cout << "Ok, your energy is " <<baseEnergy <<endl <<endl;
     }
     int GetHealth()
@@ -121,29 +123,40 @@ int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
     {
         health = health - damage;
     }
-
-    int StandardActions()
+    int SpecialActions(int energy);
+    int StandardActions(int energy)
     {
         cout<<"Ok, standard action" <<endl;
-        string answer;
-        cout << endl <<"Block or attack?" <<endl;
-        cin >> answer;
+        int answer;
+        cout << endl <<"1) Attack" <<endl;
+        cout <<"2) Block" <<endl;
+        cout <<"3) Run" <<endl;
+        cout <<"4) Special Actions" <<endl;
+        answer=GetNumber();
         cout <<endl;
-        if (answer=="attack")
+        if (answer==1)
             return 0;
-        else
+        else if (answer==2)
             return 1;
+        else if (answer==3)
+            return -1;
+        else if (answer==4)
+            return SpecialActions(energy);
     }
 
     int SpecialActions(int energy)
     {
         cout<<endl<<"Energy is " <<energy <<"/" <<GetEnergy();
         cout<<endl <<endl <<"Chose an action:" <<endl <<endl;
-        for(int i=0; i<10; i++)
+        for(int i=-1; i<10; i++)
         {
             int count=i;
             int x = GetSkillsArray(i);
-            if (count==0)
+            if (count==-1)
+            {
+                    cout<<"0) standard actions -0"<<endl;
+            }
+            else if (count==0)
             {
                 if (x==1)
                     cout<<"1) Heal -2" <<endl;
@@ -204,14 +217,10 @@ int energyReq[10]={2,1,3,4,4,2,5,2,9,0};
                     cout<<"9) Great heal -9"<<endl;
                 }
             }
-            else if (count==9)
-            {
-                    cout<<"10) standard actions -0"<<endl<<endl;
-            }
         }
         int number = GetNumber();
-        if (number==10)
-            StandardActions();
+        if (number==0)
+            StandardActions(energy);
         else if (skillsArray[number-1]==1)
         {
             if (energyReq[number-1] > energy)
