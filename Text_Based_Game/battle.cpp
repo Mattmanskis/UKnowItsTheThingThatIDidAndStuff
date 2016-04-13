@@ -6,7 +6,6 @@
 #include <time.h>
 #include "getvalues.h"
 using namespace std;
-
 bool zAlive = true;
 int zLevel;
 string zName;
