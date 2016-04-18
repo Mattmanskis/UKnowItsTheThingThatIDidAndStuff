@@ -22,6 +22,11 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
         return x;
     }
 
+    int RandomNumber(int x, int y)
+    {
+
+    }
+
     void InitalizeName ()
     {
         cout << "First please enter your name: ";
@@ -122,6 +127,8 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
     void SetHealth(int damage)
     {
         health = health - damage;
+        if(health>0)
+            health=0;
     }
     int SpecialActions(int energy);
     int StandardActions(int energy)

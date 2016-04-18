@@ -2,7 +2,7 @@
 #include "getvalues.h"
 #include "encounter.h"
 using namespace std;
-
+string zNames[5]{"Agressive Zombie","u","y","z","i"};
 void StartText ()
 {
     cout << "Hello Welcome to Zombie Simulator 2016, by !" << endl;
@@ -28,8 +28,12 @@ int main()
     GetStats();
     readyToPlay=CheckOk("Is it ok to start with these stats?");
     }while (readyToPlay==false);
-    Encounter(1, "Agressive Zombie");
+    bool pAlive = true;
+    do
+    {
+        int level= GetLevel();
 
-
+        pAlive=Encounter(1, "Agressive Zombie");
+    }while (pAlive=true);
     return 0;
 }

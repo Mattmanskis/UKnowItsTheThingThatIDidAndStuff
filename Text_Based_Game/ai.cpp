@@ -1,16 +1,20 @@
 #include "ai.h"
-void Ai(){
-/*if (zName == "Agressive Zombie")
+#include <iostream>
+using namespace std;
+
+int GetZAttack(string name, int energy, double healthPercent)
 {
-    if (zAttack==0){
-        if(FiftyFifty())
-            zAttack=1;
-        else
-            zAttack=2;
+if (zName == "Agressive Zombie")
+{
+    if (healthPercent<.2)
+    {
+        if(energy>=9)
+        {
+            return
+        }
     }
-    else
-    zAttack = 1;
 }
+/*
 if (zName == "Mirror Zombie")
 {
     if (pAttack >= 1 || pAttack <= 3)

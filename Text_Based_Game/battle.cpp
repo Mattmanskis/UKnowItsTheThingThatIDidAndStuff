@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "getvalues.h"
+#include "ai.h"
 using namespace std;
 bool zAlive = true;
 int zLevel;
@@ -14,6 +15,7 @@ int zHealth;
 int zBaseHealth;
 int zEnergy;
 int zBaseDefense;
+double percentHealth;
 
 void CreateZ(int level, string name)
 {
@@ -29,7 +31,7 @@ void CreateZ(int level, string name)
     }
     zHealth=zBaseHealth;
 }
-void Battle(int level, string name, int attacker)
+bool Battle(int level, string name, int attacker)
 {
     CreateZ(level,name);
     bool pAlive=true;
@@ -47,6 +49,7 @@ void Battle(int level, string name, int attacker)
 
     cout <<"Battle started!" <<endl;
     int cooldownArray[5]={0,0,0,0,0};
+    int zCooldownArray[5]={0,0,0,0,0};
     do
     {
         cout<<endl;
@@ -103,6 +106,16 @@ void Battle(int level, string name, int attacker)
         }
         else
             pAttack=GetPAttack(energy);
+        if (zCooldownArray[4]>0)
+        {
+         zAttack=11;
+         zCooldownArray[4]=0;
+        }
+        else
+        {
+            percentHealth = zHealth/zBaseHealth;
+            zAttack=GetZAttack(zName, zEnergy, percentHealth);
+        }
         energy=energy-GetEnergyReq(pAttack-2);
         if (pAttack<7)
         {
@@ -185,14 +198,103 @@ void Battle(int level, string name, int attacker)
                     zDamageDone=(pDamage*2)-zDefense;
                 }
         }
+        if (zAttack<7)
+        {
+            if (zAttack<4)
+            {
+                if (zAttack == 0)
+                {
+                    pDamageDone = (zDamage-pDefense);
+                    cout<<zName <<" uses standard attack!"<<endl;
+                }
+                else if (zAttack == 2)
+                {
+                    cout<<zName <<" uses Heal, healing 5 points of damage!";
+                    if(zHealth + 5 > zBaseHealth)
+                        zHealth=zBaseHealth;
+                    else
+                        zHealth=zHealth+5;
+                }
+            }
+            else
+            {
+                if (zAttack==4)
+                {
+                    cout<<zName<<" used Iron Skin!" <<endl; "Enemy defense increased for 5 rounds!";
+                    zCooldownArray[0]=5;
+                }
+                else if (zAttack==5)
+                {
+                    cout<<zName<<" used Prayer to the old gods!" <<endl <<"Enemy damage increased for 3 rounds";
+                    zCooldownArray[1]=3;
+                }
+                else if (zAttack==6)
+                {
+                    cout<<zName<<" used Ethral scream!"<<endl<<GetName()<<"'s attack and defense are significnatly decreased next 2 rounds";
+                    zCooldownArray[2]=2;
+                }
+            }
+        }
+        else
+        {
+                if(zAttack==7)
+                {
+                    cout<<zName<<" used Blood curse" <<endl<<"Trade 1/5 of your health to do double damage to the player";
+                    zHealth=zHealth-zHealth/5;
+                    zDamageDone=GetHealth()*2/5;
+                }
+                else if(zAttack==8)
+                {
+                    cout<<zName<<" used Darkness falls!" <<endl<<"All base damage is halved for 5 rounds!";
+                    zCooldownArray[3]=5;
+                }
+                else if(zAttack==9)
+                {
+                    cout<<zName<<" used Damage bank!" <<endl <<zName <<" stores energy...";
+                    zCooldownArray[4]=1;
+                }
+                else if(zAttack==10)
+                {
+                    cout<<zName<<" used Great heal" <<endl <<zName <<" healed 15 points of health ";
+                    if(zHealth + 15 > zBaseHealth)
+                        zHealth=zBaseHealth;
+                    else
+                        zHealth=zHealth+15;
+                }
+                else if(zAttack==11)
+                {
+                    cout<<zName <<" unleashes energy for masive damage!";
+                    pDamageDone=(zDamage*2)-pDefense;
+                }
+        }
         if (pAttack==1)
         {
-            pDamageDone=pDamageDone/5;
+            if(zAttack==3)
+                SetHealth(zDamage*2-pDefense);
+            else
+                pDamageDone=pDamageDone/5;
+        }
+        if (zAttack==1)
+        {
+            if(pAttack==3)
+                zHealth=zHealth-(pDamage*2-zDefense);
+            else
+                zDamageDone=zDamageDone/5;
         }
         zHealth=zHealth-zDamageDone;
+        if(zHealth<=0)
+        {
+            zHealth=0;
+            zAlive=false;
+        }
+        if(GetHealth()<=0)
+        {
+            pAlive==false;
+        }
         cout <<GetName() <<"'s health is " <<GetHealth() <<"/" <<GetBaseHealth()<<endl;
         cout <<zName <<"'s health is " <<zHealth <<"/" <<zBaseHealth <<endl;
         cout<<endl;
-    }while (pAlive==zAlive);
+    }while (pAlive==true && zAlive==true);
     cout<<"Battle over!";
+    if
 }

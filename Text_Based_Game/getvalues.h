@@ -19,6 +19,7 @@ void GetStats ();
 void SetHealth(int damage);
 int GetPAttack(int energy);
 int GetNumber();
+int RandomNumber(int x, int y);
 bool CheckOk(string text);
 bool FiftyFifty();
 #endif // GETVALUES_H
