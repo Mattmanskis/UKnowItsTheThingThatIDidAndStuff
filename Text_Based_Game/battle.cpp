@@ -270,16 +270,31 @@ bool Battle(int level, string name, int attacker)
         if (pAttack==1)
         {
             if(zAttack==3)
+            {
                 SetHealth(zDamage*2-pDefense);
+                cout<<zName <<" uses Gaurd Break, dealing massive damage!";
+            }
             else
                 pDamageDone=pDamageDone/5;
+
+        }
+        else if (zAttack==3)
+        {
+            cout<<zName <<" uses Gaurd Break, with no effect...";
         }
         if (zAttack==1)
         {
             if(pAttack==3)
+            {
                 zHealth=zHealth-(pDamage*2-zDefense);
+                cout<<GetName() <<" uses Gaurd Break, dealing massive damage!";
+            }
             else
                 zDamageDone=zDamageDone/5;
+        }
+        else if (pAttack==3)
+        {
+            cout<<GetName() <<" uses Gaurd Break, with no effect...";
         }
         zHealth=zHealth-zDamageDone;
         if(zHealth<=0)
@@ -296,5 +311,5 @@ bool Battle(int level, string name, int attacker)
         cout<<endl;
     }while (pAlive==true && zAlive==true);
     cout<<"Battle over!";
-    if
+    return pAlive;
 }

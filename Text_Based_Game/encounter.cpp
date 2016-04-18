@@ -1,14 +1,11 @@
 #include "encounter.h"
 #include <iostream>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include "getvalues.h"
 #include "battle.h"
 using namespace std;
 bool Encounter(int level, string zName )
 {    
-    rand1=RandomNumber(1,4);
+    int rand1=RandomNumber(1,4);
     if (rand1 < 3)
     {
         cout<< "You see an agressive " <<zName <<", coming at you, you must battle!" <<endl;
@@ -37,10 +34,8 @@ bool Encounter(int level, string zName )
     else
     {
         cout<< "A " <<zName <<" attacks you before you can react!" <<endl;
-        Battle(level, zName, 2);
+       return Battle(level, zName, 2);
     }
 
-
-    return damageDone;
 }
 

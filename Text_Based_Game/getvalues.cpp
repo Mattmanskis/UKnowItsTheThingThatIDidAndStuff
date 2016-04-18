@@ -1,6 +1,8 @@
 #include "getvalues.h"
 #include <iostream>
 #include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <tgmath.h>
 using namespace std;
 
@@ -24,7 +26,8 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
 
     int RandomNumber(int x, int y)
     {
-
+        srand (time(NULL));
+        return rand() % y + x;
     }
 
     void InitalizeName ()

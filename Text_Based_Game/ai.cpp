@@ -2,17 +2,26 @@
 #include <iostream>
 using namespace std;
 
-int GetZAttack(string name, int energy, double healthPercent)
+int GetZAttack(string zName, int energy, double healthPercent)
 {
-if (zName == "Agressive Zombie")
-{
-    if (healthPercent<.2)
+    if (healthPercent<.1)
     {
         if(energy>=9)
         {
-            return
+            return 11;
+        }
+        else if(energy>=4)
+        {
+            return 2;
+        }
+        else
+        {
+            return 1;
         }
     }
+if (zName == "Agressive Zombie")
+{
+
 }
 /*
 if (zName == "Mirror Zombie")
