@@ -13,9 +13,12 @@ string zName;
 int zBaseDamage;
 int zHealth;
 int zBaseHealth;
-int zEnergy;
+int zEnergy=0;
+int zBaseEnergy;
 int zBaseDefense;
 double percentHealth;
+int roundCount=0;
+int energy=0;
 
 void CreateZ(int level, string name)
 {
@@ -26,7 +29,7 @@ void CreateZ(int level, string name)
     {
         zBaseDamage=5*zLevel/2;
         zBaseHealth=30*zLevel;
-        zEnergy=4;
+        zBaseEnergy=4;
         zBaseDefense=2;
     }
     zHealth=zBaseHealth;
@@ -59,8 +62,6 @@ bool Battle(int level, string name, int attacker)
         int zDamage = zBaseDamage;
         int zDefense = zBaseDefense;
         int pDefense = GetDefense();
-        int roundCount;
-        int energy;
         int pDamageDone = 0;
         int zDamageDone = 0;
         if (cooldownArray[0]>0)
@@ -86,19 +87,18 @@ bool Battle(int level, string name, int attacker)
             zDamage=zDamage-2;
             cooldownArray[2]=cooldownArray[2]-1;
         }
-        if (roundCount>50 || roundCount<0)
-        {
-            roundCount=0;
-            energy=0;
-        }
-        if (energy==0)
-            energy=1;
-        else if (energy*2 >= GetEnergy())
-            energy=GetEnergy();
-        else
-            energy=energy*2;
         roundCount=roundCount+1;
         cout <<"Round " <<roundCount <<endl;
+        energy=energy*2;
+        zEnergy=zEnergy*2;
+        if (energy > GetEnergy())
+            energy=GetEnergy();
+        if (energy>=0)
+            energy=1;
+        if (zEnergy > zBaseEnergy)
+            zEnergy=zBaseEnergy;
+        if (zEnergy>=0)
+            zEnergy=1;
         if (cooldownArray[4]>0)
         {
          pAttack=11;
@@ -117,6 +117,7 @@ bool Battle(int level, string name, int attacker)
             zAttack=GetZAttack(zName, zEnergy, percentHealth);
         }
         energy=energy-GetEnergyReq(pAttack-2);
+        zEnergy=zEnergy-GetEnergyReq(zAttack-2);
         if (pAttack<7)
         {
             if (pAttack<4)
@@ -272,29 +273,35 @@ bool Battle(int level, string name, int attacker)
             if(zAttack==3)
             {
                 SetHealth(zDamage*2-pDefense);
-                cout<<zName <<" uses Gaurd Break, dealing massive damage!";
+                cout<<zName <<" uses Gaurd Break, dealing massive damage!"<<endl;
             }
             else
+            {
                 pDamageDone=pDamageDone/5;
+                cout<<GetName() <<" blocked 80% of damage!" <<endl;
+            }
 
         }
         else if (zAttack==3)
         {
-            cout<<zName <<" uses Gaurd Break, with no effect...";
+            cout<<zName <<" uses Gaurd Break, with no effect..."<<endl;
         }
         if (zAttack==1)
         {
             if(pAttack==3)
             {
                 zHealth=zHealth-(pDamage*2-zDefense);
-                cout<<GetName() <<" uses Gaurd Break, dealing massive damage!";
+                cout<<GetName() <<" uses Gaurd Break, dealing massive damage!"<<endl;
             }
             else
+            {
                 zDamageDone=zDamageDone/5;
+                cout<<zName <<" blocked 80% of incoming damage!"<<endl;
+            }
         }
         else if (pAttack==3)
         {
-            cout<<GetName() <<" uses Gaurd Break, with no effect...";
+            cout<<GetName() <<" uses Gaurd Break, with no effect..."<<endl;
         }
         zHealth=zHealth-zDamageDone;
         if(zHealth<=0)

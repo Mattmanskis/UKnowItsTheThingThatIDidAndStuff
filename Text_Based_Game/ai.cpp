@@ -1,5 +1,6 @@
 #include "ai.h"
 #include <iostream>
+#include "getvalues.h"
 using namespace std;
 
 int GetZAttack(string zName, int energy, double healthPercent)
@@ -19,8 +20,24 @@ int GetZAttack(string zName, int energy, double healthPercent)
             return 1;
         }
     }
-if (zName == "Agressive Zombie")
+else if (zName == "Agressive Zombie")
 {
+    if (energy == 4)
+        return  5;
+    else if (FiftyFifty() == true)
+    {
+        if (FiftyFifty() == true && energy >= 2)
+            return 9;
+        else
+            return 0;
+    }
+    else
+    {
+        if (FiftyFifty() == true && energy >=2 )
+            return 2;
+        else
+            return 0;
+    }
 
 }
 /*
