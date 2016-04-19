@@ -75,8 +75,8 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
         {
             cout << "Now enter your defense, must be " <<20-baseHealth/10-baseDamage-baseEnergy <<endl;
             baseDefense = GetNumber();
-        } while (baseDefense <3 || baseDamage+baseHealth/10+baseEnergy+baseDefense >20);
-        cout << "Ok, your energy is " <<baseEnergy <<endl <<endl;
+        } while (baseDamage+baseHealth/10+baseEnergy+baseDefense !=20);
+        cout << "Ok, your defense is " <<baseDefense <<endl <<endl;
     }
     int GetHealth()
     {
@@ -99,7 +99,8 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
     }
     int GetDefense()
     {
-        return baseDefense;
+        int actualDefense = baseDefense/2;
+        return actualDefense;
     }
     string GetName()
     {
@@ -130,7 +131,7 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
     void SetHealth(int damage)
     {
         health = health - damage;
-        if(health>0)
+        if(health<0)
             health=0;
     }
     int SpecialActions(int energy);

@@ -32,8 +32,9 @@ int main()
     do
     {
         int level= GetLevel();
-
-        pAlive=Encounter(1, "Agressive Zombie");
+        pAlive=Encounter(level, "Agressive Zombie");
+        if (GetHealth()==0)
+            pAlive=false;
     }while (pAlive=true);
     return 0;
 }

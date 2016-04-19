@@ -27,9 +27,9 @@ void CreateZ(int level, string name)
     zAlive=true;
     if(zName=="Agressive Zombie")
     {
-        zBaseDamage=5*zLevel/2;
+        zBaseDamage=7*zLevel;
         zBaseHealth=30*zLevel;
-        zBaseEnergy=4;
+        zBaseEnergy=5;
         zBaseDefense=2;
     }
     zHealth=zBaseHealth;
@@ -93,11 +93,11 @@ bool Battle(int level, string name, int attacker)
         zEnergy=zEnergy*2;
         if (energy > GetEnergy())
             energy=GetEnergy();
-        if (energy>=0)
+        if (energy<=0)
             energy=1;
         if (zEnergy > zBaseEnergy)
             zEnergy=zBaseEnergy;
-        if (zEnergy>=0)
+        if (zEnergy<=0)
             zEnergy=1;
         if (cooldownArray[4]>0)
         {
@@ -152,7 +152,7 @@ bool Battle(int level, string name, int attacker)
             {
                 if (pAttack==4)
                 {
-                    cout<<GetName()<<" used Iron Skin!" <<endl; "Player defense increased for 5 rounds!";
+                    cout<<GetName()<<" used Iron Skin!" <<endl <<"Player defense increased for 5 rounds!";
                     cooldownArray[0]=5;
                 }
                 else if (pAttack==5)
@@ -172,8 +172,8 @@ bool Battle(int level, string name, int attacker)
                 if(pAttack==7)
                 {
                     cout<<GetName()<<" used Blood curse" <<endl<<"Trade 1/5 of your health to do double damage to your enemy";
-                    SetHealth(GetHealth()/5);
-                    zDamageDone=GetHealth()*2/5;
+                    SetHealth(GetBaseHealth()/5);
+                    zHealth=zHealth-GetBaseHealth()*2/5;
                 }
                 else if(pAttack==8)
                 {
@@ -221,7 +221,7 @@ bool Battle(int level, string name, int attacker)
             {
                 if (zAttack==4)
                 {
-                    cout<<zName<<" used Iron Skin!" <<endl; "Enemy defense increased for 5 rounds!";
+                    cout<<zName<<" used Iron Skin!" <<endl <<"Enemy defense increased for 5 rounds!";
                     zCooldownArray[0]=5;
                 }
                 else if (zAttack==5)
@@ -241,8 +241,8 @@ bool Battle(int level, string name, int attacker)
                 if(zAttack==7)
                 {
                     cout<<zName<<" used Blood curse" <<endl<<"Trade 1/5 of your health to do double damage to the player";
-                    zHealth=zHealth-zHealth/5;
-                    zDamageDone=GetHealth()*2/5;
+                    zHealth=zHealth-zBaseHealth*2/5;
+                    SetHealth(GetHealth()*2/5);
                 }
                 else if(zAttack==8)
                 {
@@ -304,6 +304,7 @@ bool Battle(int level, string name, int attacker)
             cout<<GetName() <<" uses Gaurd Break, with no effect..."<<endl;
         }
         zHealth=zHealth-zDamageDone;
+        SetHealth(pDamageDone);
         if(zHealth<=0)
         {
             zHealth=0;
@@ -311,12 +312,14 @@ bool Battle(int level, string name, int attacker)
         }
         if(GetHealth()<=0)
         {
-            pAlive==false;
+            pAlive=false;
         }
         cout <<GetName() <<"'s health is " <<GetHealth() <<"/" <<GetBaseHealth()<<endl;
         cout <<zName <<"'s health is " <<zHealth <<"/" <<zBaseHealth <<endl;
         cout<<endl;
     }while (pAlive==true && zAlive==true);
     cout<<"Battle over!";
+    energy=0;
+    roundCount=0;
     return pAlive;
 }
