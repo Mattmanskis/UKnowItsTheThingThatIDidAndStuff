@@ -16,6 +16,7 @@ int GetLevel();
 int GetEnergyReq(int x);
 string GetName();
 void GetStats ();
+void LevelUp(int experianceGained);
 void SetHealth(int damage);
 int GetPAttack(int energy);
 int GetNumber();

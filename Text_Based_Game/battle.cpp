@@ -113,7 +113,8 @@ bool Battle(int level, string name, int attacker)
         }
         else
         {
-            percentHealth = zHealth/zBaseHealth;
+            percentHealth = (zHealth*100)/(zBaseHealth);
+            cout<<"Percent health =" <<percentHealth<<endl;
             zAttack=GetZAttack(zName, zEnergy, percentHealth);
         }
         energy=energy-GetEnergyReq(pAttack-2);
@@ -320,6 +321,7 @@ bool Battle(int level, string name, int attacker)
     }while (pAlive==true && zAlive==true);
     cout<<"Battle over!";
     energy=0;
+    zEnergy=0;
     roundCount=0;
     return pAlive;
 }

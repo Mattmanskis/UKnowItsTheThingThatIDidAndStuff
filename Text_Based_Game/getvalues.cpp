@@ -269,6 +269,21 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
           return false;
     }
 
+    void LevelUp(int experianceGained)
+    {
+        experiance=experiance+experianceGained;
+        if (experiance>=experianceRequired)
+        {
+            cout<<"You leveled up!"<<endl<<endl;
+            cout<<"Your stats are:"<<endl<<endl;
+            GetStats();
+            cout<<"You have 3 points you can put into any stat"<<endl;
+            int pointsLeft = 3;
+            cout<<"How many points would you like to put into Health?"<<endl;
+            GetNumber();
+        }
+    }
+
     bool FiftyFifty()
     {
        srand (time(NULL));

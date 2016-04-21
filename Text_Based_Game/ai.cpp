@@ -5,7 +5,7 @@ using namespace std;
 
 int GetZAttack(string zName, int energy, double healthPercent)
 {
-    if (healthPercent<.1)
+    if (healthPercent<15)
     {
         if(energy>=9)
         {
