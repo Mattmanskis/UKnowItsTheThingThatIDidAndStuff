@@ -277,10 +277,72 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
             cout<<"You leveled up!"<<endl<<endl;
             cout<<"Your stats are:"<<endl<<endl;
             GetStats();
-            cout<<"You have 3 points you can put into any stat"<<endl;
-            int pointsLeft = 3;
+            cout<<"You have 4 points you can put into any stat"<<endl;
+            int pointsLeft = 4;
+            bool centinue = true;
+            do
+            {
             cout<<"How many points would you like to put into Health?"<<endl;
-            GetNumber();
+            do
+            {
+            int healthPlus=GetNumber();
+            if(healthPlus>=0 && healthPlus<=pointsLeft)
+            {
+            pointsLeft=pointsLeft-healthPlus;
+            baseHealth=baseHealth+healthPlus*10;
+            health=health+healthPlus*10;
+            centinue =true;
+            }
+            else
+                centinue=false;
+            }while (centinue==false);
+
+            cout<<"How many points would you like to put into Damage?"<<endl;
+            do
+            {
+            int damagePlus=GetNumber();
+            if(damagePlus>=0 && damagePlus<=pointsLeft)
+            {
+            pointsLeft=pointsLeft-damagePlus;
+            baseDamage=baseDamage+damagePlus;
+            centinue=true;
+            }
+            else
+                centinue=false;
+            }while (centinue==false);
+
+            cout<<"How many points would you like to put into Energy?"<<endl;
+            do
+            {
+            int energyPlus=GetNumber();
+            if(energyPlus>=0 && energyPlus<=pointsLeft)
+            {
+            pointsLeft=pointsLeft-energyPlus;
+            baseEnergy=baseEnergy+energyPlus;
+            centinue=true;
+            }
+            else
+                centinue=false;
+            }while (centinue==false);
+            cout<<"How many points would you like to put into defense?"<<endl;
+            do
+            {
+            int defensePlus=GetNumber();
+            if(defensePlus>=0 && defensePlus<=pointsLeft)
+            {
+            pointsLeft=pointsLeft-defensePlus;
+            baseDefense=baseDefense+defensePlus;
+            centinue=true;
+            }
+            else
+                centinue=false;
+            if (pointsLeft != 0)
+                cout<<"You didn't allocate enough skill points!"<<endl;
+            }while (centinue==false);
+            }while (pointsLeft != 0);
+
+
+
         }
     }
 
