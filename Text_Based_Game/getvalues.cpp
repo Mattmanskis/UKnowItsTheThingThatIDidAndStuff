@@ -14,7 +14,7 @@ int baseDefense;
 string pName;
 double experiance = 0;
 double experianceRequired = 10;
-int skillsArray[9]={1,1,1,1,1,1,1,1,1};
+int skillsArray[9]={0,0,0,0,0,0,0,0,0};
 int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
     int GetNumber()
     {
@@ -274,6 +274,7 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
         experiance=experiance+experianceGained;
         if (experiance>=experianceRequired)
         {
+            experianceRequired=experianceRequired*10;
             cout<<"You leveled up!"<<endl<<endl;
             cout<<"Your stats are:"<<endl<<endl;
             GetStats();
@@ -340,10 +341,57 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
                 cout<<"You didn't allocate enough skill points!"<<endl;
             }while (centinue==false);
             }while (pointsLeft != 0);
+            int newMove = 0;
+            bool allMovesGoten = true;
+            do
+            {
+                cout<<"Chose a skill:";
+                for(int i=0; i++; i<9)
+                {
+                    allMovesGoten=allMovesGoten*skillsArray[1];
+                    if(i==0&&skillsArray[i]==0)
+                        cout<<"1) Heal" <<endl <<"Uses 2 energy, heals 5 points of damage"<<endl <<endl;
+                    if(i==1&&skillsArray[i]==0)
+                        cout<<"2) Gaurd Break" <<endl <<"Uses 1 energy, does large amounts of damage if your enemy blocks"<<endl <<endl;
+                    if(i==2&&skillsArray[i]==0)
+                        cout<<"3) Iron Skin" <<endl <<"Uses 3 energy, increases player defense" <<endl <<endl;
+                    if(i==3&&skillsArray[i]==0)
+                        cout<<"4) Prayer To The Old Gods" <<endl <<"Uses 4 energy, increases player attack" <<endl <<endl;
+                    if(i==4&&skillsArray[i]==0)
+                        cout<<"5) Ethral Scream" <<endl <<"Uses 4 energy, lowers enemy defense and attack greatly for a short time" <<endl <<endl;
+                    if(i==5&&skillsArray[i]==0)
+                        cout<<"6) Blood Curse" <<endl <<"Uses 2 energy, player gives 20% of their curent health to do twice that damage to the enemy" <<endl <<endl;
+                    if(i==6&&skillsArray[i]==0)
+                        cout<<"7) Darkness Falls" <<endl <<"Uses 5 energy, both player and enemy damage is halved for a period of time" <<endl <<endl;
+                    if(i==7&&skillsArray[i]==0)
+                        cout<<"8) Damage Bank" <<endl <<"Uses 2 energy, player waits one trun then attacks doing double damage" <<endl <<endl;
+                    if(i==8&&skillsArray[i]==0)
+                        cout<<"9) Great Heal" <<endl <<"Uses 9 energy, heals lots of damage"<<endl <<endl;
+                    if(i>=9)
+                        cout<<"Too Far" <<endl;
+                }
+                    if (allMovesGoten==0)
+                    {
+                    int choice = GetNumber();
+                    if (choice>=0&&choice<=9)
+                    {
+                    if (skillsArray[choice-1]==1)
+                        cout<<"Please enter a valid number";
+                    else
+                    {
+                        skillsArray[choice-1]=1;
+                        cout<<"You learne a new skill";
+                        newMove=1;
+                    }
+                    }
+                    else
+                        cout<<"Please enter a valid choice";
+                    }
+                    else
+                        cout<<"You have all moves!";
+            }while(newMove == 0);
 
-
-
-        }
+    }
     }
 
     bool FiftyFifty()
