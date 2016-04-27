@@ -13,7 +13,7 @@ int baseEnergy;
 int baseDefense;
 string pName;
 double experiance = 0;
-double experianceRequired = 10;
+double experianceRequired = 1;
 int skillsArray[9]={0,0,0,0,0,0,0,0,0};
 int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
     int GetNumber()
@@ -274,7 +274,8 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
         experiance=experiance+experianceGained;
         if (experiance>=experianceRequired)
         {
-            experianceRequired=experianceRequired*10;
+            if(GetLevel()>=1)
+            {
             cout<<"You leveled up!"<<endl<<endl;
             cout<<"Your stats are:"<<endl<<endl;
             GetStats();
@@ -341,14 +342,16 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
                 cout<<"You didn't allocate enough skill points!"<<endl;
             }while (centinue==false);
             }while (pointsLeft != 0);
+            }
+            experianceRequired=experianceRequired*10;
             int newMove = 0;
-            bool allMovesGoten = true;
+            int allMovesGoten = 1;
             do
             {
-                cout<<"Chose a skill:";
-                for(int i=0; i++; i<9)
+                cout<<"Chose a skill:"<<endl<<endl;
+                for(int i=0; i<9; i++)
                 {
-                    allMovesGoten=allMovesGoten*skillsArray[1];
+                    allMovesGoten=allMovesGoten*skillsArray[i];
                     if(i==0&&skillsArray[i]==0)
                         cout<<"1) Heal" <<endl <<"Uses 2 energy, heals 5 points of damage"<<endl <<endl;
                     if(i==1&&skillsArray[i]==0)

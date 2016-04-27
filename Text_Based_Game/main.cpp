@@ -28,6 +28,7 @@ int main()
     InitalizeDefense();
     GetStats();
     readyToPlay=CheckOk("Is it ok to start with these stats?");
+    LevelUp(1);
     }while (readyToPlay==false);
     bool pAlive = true;
     bool gameOver = false;

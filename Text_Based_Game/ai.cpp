@@ -3,7 +3,7 @@
 #include "getvalues.h"
 using namespace std;
 
-int GetZAttack(string zName, int energy, double healthPercent)
+int GetZAttack(string zName, int energy, double healthPercent, int coolDownArray[5])
 {
     if (healthPercent<15)
     {
@@ -34,70 +34,43 @@ else if (zName == "Agressive Zombie")
     }
 
 }
-/*
-if (zName == "Mirror Zombie")
+else if (zName == "Boney Zombie")
 {
-    if (pAttack >= 1 || pAttack <= 3)
-        zAttack = pAttack;
-    else
-        zAttack = 1;
-}
-if (zName == "Defensive Zombie")
-{
-    if (pAttack==0)
-        zAttack=1;
-    if (zAttack==0)
+    if(healthPercent > 80 && energy > 2)
+        return 7;
+    else if(healthPercent < 50)
     {
-        if(FiftyFifty())
-            zAttack=1;
+        if(energy>=9)
+            return 10;
+        else if (energy>=2 && healthPercent<=30)
+            return 2;
         else
-            zAttack=3;
+            return 1;
     }
     else
-        zAttack=2;
-}
-if (zName == "BOSS ZOMBIE")
-{
-    int cycle;
-    cycle = cycle + 1;
-    if (cycle > 0 || cycle <=3)
-        cycle = 0;
-    if (cycle == 0)
-    {
-        if (zAttack==0){
-            if(FiftyFifty())
-                zAttack=1;
-            else
-                zAttack=2;
-        }
-        else
-        zAttack = 1;
-    }
-    if (cycle == 1)
-    {
-        if (zAttack==0){
-            if(FiftyFifty())
-                zAttack=1;
-            else
-                zAttack=2;
-        }
-        else
-        zAttack = 1;
-    }
-    if (cycle == 2)
-    {
-        if (pAttack==0)
-            zAttack=1;
-        if (zAttack==0)
-        {
-            if(FiftyFifty())
-                zAttack=1;
-            else
-                zAttack=3;
-        }
-        else
-            zAttack=2;
-    }
+        return 0;
 
-}*/
+}
+else if (zName == "Slime")
+{
+    if(coolDownArray[3]!=0)
+    {
+        if (energy>=3 && coolDownArray[0]==0)
+            return 4;
+        else
+            return 0;
+    }
+    else if (energy >=3)
+    {
+        if (energy >=5)
+            return 8;
+        else if(coolDownArray[0] != 0)
+            return 4;
+        else
+            return 0;
+    }
+    else
+        return 1;
+}
+    return 0;
 }

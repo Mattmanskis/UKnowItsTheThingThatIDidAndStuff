@@ -3,6 +3,6 @@
 #include <string>
 using namespace std;
 
-int GetZAttack(string name, int energy, double healthPercent);
+int GetZAttack(string zName, int energy, double healthPercent, int coolDownArray[5]);
 
 #endif // AI_H

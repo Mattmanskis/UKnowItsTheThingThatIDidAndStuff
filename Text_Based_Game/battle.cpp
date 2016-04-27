@@ -32,6 +32,34 @@ void CreateZ(int level, string name)
         zBaseEnergy=5;
         zBaseDefense=2;
     }
+    else if(zName=="Slime")
+    {
+        zBaseDamage=5*zLevel;
+        zBaseHealth=40*zLevel;
+        zBaseEnergy=6;
+        zBaseDefense=3;
+    }
+    else if(zName=="Boney Zombie")
+    {
+        zBaseDamage=3*zLevel;
+        zBaseHealth=50*zLevel;
+        zBaseEnergy=9;
+        zBaseDefense=1;
+    }
+    else if(zName=="Giant Zombie")
+    {
+        zBaseDamage=7*zLevel;
+        zBaseHealth=40*zLevel;
+        zBaseEnergy=6;
+        zBaseDefense=3;
+    }
+    else if(zName=="Sad Zomibie")
+    {
+        zBaseDamage=5*zLevel;
+        zBaseHealth=40*zLevel;
+        zBaseEnergy=6;
+        zBaseDefense=3;
+    }
     zHealth=zBaseHealth;
 }
 bool Battle(int level, string name, int attacker)
@@ -115,7 +143,7 @@ bool Battle(int level, string name, int attacker)
         {
             percentHealth = (zHealth*100)/(zBaseHealth);
             cout<<"Percent health =" <<percentHealth<<endl;
-            zAttack=GetZAttack(zName, zEnergy, percentHealth);
+            zAttack=GetZAttack(zName, zEnergy, percentHealth,zCooldownArray);
         }
         energy=energy-GetEnergyReq(pAttack-2);
         zEnergy=zEnergy-GetEnergyReq(zAttack-2);
