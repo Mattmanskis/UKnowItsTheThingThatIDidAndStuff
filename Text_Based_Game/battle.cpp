@@ -27,28 +27,28 @@ void CreateZ(int level, string name)
     zAlive=true;
     if(zName=="Agressive Zombie")
     {
-        zBaseDamage=7*zLevel;
+        zBaseDamage=6*zLevel;
         zBaseHealth=30*zLevel;
         zBaseEnergy=5;
         zBaseDefense=2;
     }
     else if(zName=="Slime")
     {
-        zBaseDamage=5*zLevel;
+        zBaseDamage=6*zLevel;
         zBaseHealth=40*zLevel;
         zBaseEnergy=6;
         zBaseDefense=3;
     }
     else if(zName=="Boney Zombie")
     {
-        zBaseDamage=3*zLevel;
+        zBaseDamage=6*zLevel;
         zBaseHealth=50*zLevel;
         zBaseEnergy=9;
         zBaseDefense=1;
     }
     else if(zName=="Giant Zombie")
     {
-        zBaseDamage=7*zLevel;
+        zBaseDamage=6*zLevel;
         zBaseHealth=40*zLevel;
         zBaseEnergy=6;
         zBaseDefense=3;
@@ -97,23 +97,44 @@ bool Battle(int level, string name, int attacker)
             pDefense=GetDefense()+2;
             cooldownArray[0]=cooldownArray[0]-1;
         }
+        if (zCooldownArray[0]>0)
+        {
+            zDefense=zDefense+2;
+            zCooldownArray[0]=zCooldownArray[0]-1;
+        }
         if (cooldownArray[3]>0)
         {
             pDamage=GetDamage()/2;
             zDamage=zBaseDamage/2;
             cooldownArray[3]=cooldownArray[3]-1;
         }
-
+        if (zCooldownArray[3]>0)
+        {
+            pDamage=GetDamage()/2;
+            zDamage=zBaseDamage/2;
+            cooldownArray[3]=cooldownArray[3]-1;
+        }
         if (cooldownArray[1]>0)
         {
             pDamage=pDamage+2;
             cooldownArray[1]=cooldownArray[1]-1;
+        }
+        if (zCooldownArray[1]>0)
+        {
+            zDamage=zDamage+2;
+            zCooldownArray[1]=zCooldownArray[1]-1;
         }
         if (cooldownArray[2]>0)
         {
             zDefense=zBaseDefense-3;
             zDamage=zDamage-2;
             cooldownArray[2]=cooldownArray[2]-1;
+        }               
+        if (zCooldownArray[2]>0)
+        {
+            zDefense=zBaseDefense-3;
+            zDamage=zDamage-2;
+            zCooldownArray[2]=zCooldownArray[2]-1;
         }
         roundCount=roundCount+1;
         cout <<"Round " <<roundCount <<endl;
@@ -142,7 +163,6 @@ bool Battle(int level, string name, int attacker)
         else
         {
             percentHealth = (zHealth*100)/(zBaseHealth);
-            cout<<"Percent health =" <<percentHealth<<endl;
             zAttack=GetZAttack(zName, zEnergy, percentHealth,zCooldownArray);
         }
         energy=energy-GetEnergyReq(pAttack-2);
