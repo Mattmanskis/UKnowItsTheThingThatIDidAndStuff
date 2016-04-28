@@ -144,6 +144,8 @@ int energyReq[11]={2,1,3,4,4,2,5,2,9,0,0};
         cout <<"3) Run" <<endl;
         cout <<"4) Special Actions" <<endl;
         answer=GetNumber();
+        if (answer<1 || answer>4)
+            StandardActions(energy);
         cout <<endl;
         if (answer==1)
             return 0;

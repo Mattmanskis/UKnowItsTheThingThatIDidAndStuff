@@ -27,36 +27,36 @@ void CreateZ(int level, string name)
     zAlive=true;
     if(zName=="Agressive Zombie")
     {
-        zBaseDamage=6*zLevel;
-        zBaseHealth=30*zLevel;
+        zBaseDamage=8*(1+zLevel/4);
+        zBaseHealth=15*(1+zLevel/2);
         zBaseEnergy=5;
         zBaseDefense=2;
     }
     else if(zName=="Slime")
     {
-        zBaseDamage=6*zLevel;
-        zBaseHealth=40*zLevel;
+        zBaseDamage=6*(1+zLevel/4);
+        zBaseHealth=18*(1+zLevel/2);
         zBaseEnergy=6;
-        zBaseDefense=3;
+        zBaseDefense=1;
     }
     else if(zName=="Boney Zombie")
     {
-        zBaseDamage=6*zLevel;
-        zBaseHealth=50*zLevel;
+        zBaseDamage=6*(1+zLevel/4);
+        zBaseHealth=20*(1+zLevel/2);
         zBaseEnergy=9;
-        zBaseDefense=1;
+        zBaseDefense=2;
     }
     else if(zName=="Giant Zombie")
     {
-        zBaseDamage=6*zLevel;
-        zBaseHealth=40*zLevel;
+        zBaseDamage=6*(1+zLevel/4);
+        zBaseHealth=22*(1+zLevel/2);
         zBaseEnergy=6;
         zBaseDefense=3;
     }
     else if(zName=="Sad Zomibie")
     {
-        zBaseDamage=5*zLevel;
-        zBaseHealth=40*zLevel;
+        zBaseDamage=5*(1+zLevel/4);
+        zBaseHealth=40*(1+zLevel/2);
         zBaseEnergy=6;
         zBaseDefense=3;
     }
@@ -352,6 +352,10 @@ bool Battle(int level, string name, int attacker)
         {
             cout<<GetName() <<" uses Gaurd Break, with no effect..."<<endl;
         }
+        if(zDamageDone<0)
+            zDamageDone=0;
+        if(pDamageDone<0)
+            pDamageDone=0;
         zHealth=zHealth-zDamageDone;
         SetHealth(pDamageDone);
         if(zHealth<=0)

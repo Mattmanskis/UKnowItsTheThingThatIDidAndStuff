@@ -3,7 +3,7 @@
 #include "encounter.h"
 using namespace std;
 string zNames[5]{"Slime","Agressive Zombie","Boney Zombie","Giant Zombie","Sad Zombie"};
-int zExperiance[5]{10,15,20,25,30};
+int zExperiance[5]{15,15,20,25,30};
 void StartText ()
 {
     cout << "Hello Welcome to Zombie Simulator 2016, by !" << endl;
@@ -46,12 +46,16 @@ int main()
                     gameOver==true;
             }
         }
-        int zNumber = RandomNumber(GetLevel()-1,GetLevel()+1);
+        int zNumber;
+        if(GetLevel()<3)
+            zNumber = RandomNumber(0,GetLevel());
+        else
+            zNumber = RandomNumber(0,2);
         pAlive=Encounter(level, zNames[zNumber]);
         if (GetHealth()==0)
             pAlive=false;
         else
-        LevelUp(zExperiance[zNumber]);
+        LevelUp(zExperiance[zNumber]*(1+GetLevel()/2));
     }while (pAlive==true && gameOver==false);
     if (gameOver==true)
     {
